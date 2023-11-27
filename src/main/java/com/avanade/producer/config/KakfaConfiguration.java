@@ -66,8 +66,8 @@ public class KakfaConfiguration {
             @Override
             public void onSuccess(ProducerRecord record, RecordMetadata recordMetadata) {
                 if(log.isDebugEnabled()){
-                    log.debug("message sended  on topic {} ; partition = {} with offset= {} ; Timestamp : {} ; Message Size = {}" ,
-                            recordMetadata.topic() , recordMetadata.partition() , recordMetadata.offset()
+                    log.debug("Message = {}  sended  on topic {} ; partition = {} with offset= {} ; Timestamp : {} ; Message Size = {}" ,
+                            record.value(),     recordMetadata.topic() , recordMetadata.partition() , recordMetadata.offset()
                             , recordMetadata.timestamp() , recordMetadata.serializedValueSize());
                 }
 
