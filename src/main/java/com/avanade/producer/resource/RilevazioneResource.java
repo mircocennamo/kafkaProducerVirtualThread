@@ -39,7 +39,7 @@ public class RilevazioneResource {
     @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
     @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
             backoff = @Backoff(delayExpression = "${retry.maxDelay}",multiplier = 2))
-    public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione){
         log.debug("RilevazioneResource method createCallBack has been called {} ::: attempts {} ", Thread.currentThread());
         UUID uuid = UUID.randomUUID();
         log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
