@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -35,9 +37,10 @@ public class RilevazioneResource {
 
 
     @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
-    @Retryable(value= RuntimeException.class,maxAttempts = 3,backoff = @Backoff(delay=10000))
-    public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione) {
-        log.debug("RilevazioneResource method createCallBack has been called {}", Thread.currentThread());
+    @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
+            backoff = @Backoff(delayExpression = "${retry.maxDelay}",multiplier = 2))
+    public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione) throws ExecutionException, InterruptedException {
+        log.debug("RilevazioneResource method createCallBack has been called {} ::: attempts {} ", Thread.currentThread());
         UUID uuid = UUID.randomUUID();
         log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
         rilevazione.setUuid(uuid);
@@ -46,5 +49,10 @@ public class RilevazioneResource {
         return new ResponseEntity<>(rilevazione, HttpStatus.OK);
     }
 
+    @Recover
+    public  ResponseEntity<Rilevazione> publishFallback(Exception e,Rilevazione rilevazione){
+        log.error("error send to kafka  bean {}  ::: error {} " , rilevazione, e.getMessage());
+        return new ResponseEntity<>(rilevazione, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 }

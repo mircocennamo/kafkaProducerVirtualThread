@@ -34,7 +34,7 @@ public class SenderAsyncCallBack {
 
     }
 
-    public void sendMessage(Rilevazione rilevazione, String topicName) {
-        CompletableFuture<SendResult<String, Rilevazione>> future = kafkaTemplate.send(topicName, rilevazione);
+    public CompletableFuture<SendResult<String, Rilevazione>> sendMessage(Rilevazione rilevazione, String topicName) {
+        return kafkaTemplate.send(topicName, rilevazione);
     }
 }
