@@ -1,7 +1,6 @@
 package com.avanade.producer.resource;
 
 import com.avanade.model.Rilevazione;
-import com.avanade.producer.Sender;
 import com.avanade.producer.SenderAsyncCallBack;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,30 +25,21 @@ import java.util.UUID;
 @Slf4j
 public class RilevazioneResource {
 
-
-
     @Value("${spring.kafka.topic.name}")
     private String topic;
 
     @Autowired
-    private Sender sender;
-    @Autowired
     private SenderAsyncCallBack senderAsyncCallBack;
 
-    @PostMapping(path = "/publish/nuovaRilevazione")
-    public ResponseEntity<Rilevazione> create(@RequestBody Rilevazione rilevazione) {
-        sender.sendMessage(rilevazione,topic);
-        return new ResponseEntity<>(rilevazione, HttpStatus.OK);
-    }
 
     @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
     public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione) {
         log.debug("RilevazioneResource method createCallBack has been called {}", Thread.currentThread());
         UUID uuid = UUID.randomUUID();
-        log.debug("UUID generated - {}  - UUID Version " , uuid,uuid.version());
+        log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
         rilevazione.setUuid(uuid);
         rilevazione.setInstant(Instant.now());
-        senderAsyncCallBack.sendMessage(rilevazione,topic);
+        senderAsyncCallBack.sendMessage(rilevazione, topic);
         return new ResponseEntity<>(rilevazione, HttpStatus.OK);
     }
 

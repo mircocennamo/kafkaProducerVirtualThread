@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @project spring-boot-kafka-producer
  */
 @SpringBootApplication
-public class SpringBootKafkaProducerExampleApplication {
+public class ProducerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootKafkaProducerExampleApplication.class, args);
+		SpringApplication.run(ProducerApplication.class, args);
 	}
 }

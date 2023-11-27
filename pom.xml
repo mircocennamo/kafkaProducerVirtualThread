@@ -23,7 +23,7 @@
 		<lombok.version>1.18.30</lombok.version>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<start-class>com.avanade.producer.SpringBootKafkaProducerExampleApplication</start-class>
+		<start-class>com.avanade.producer.ProducerApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -78,7 +78,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.avanade.producer.SpringBootKafkaProducerExampleApplication</mainClass>
+					<mainClass>com.avanade.producer.ProducerApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>
