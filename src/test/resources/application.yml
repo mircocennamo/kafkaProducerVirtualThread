@@ -1,0 +1,7 @@
+pring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: avanade-test
+test:
+  topic: embedded-test-topic
