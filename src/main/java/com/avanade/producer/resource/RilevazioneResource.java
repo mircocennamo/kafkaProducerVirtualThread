@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,7 @@ public class RilevazioneResource {
 
 
     @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
+    @Retryable(value= RuntimeException.class,maxAttempts = 3,backoff = @Backoff(delay=10000))
     public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione) {
         log.debug("RilevazioneResource method createCallBack has been called {}", Thread.currentThread());
         UUID uuid = UUID.randomUUID();
