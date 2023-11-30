@@ -2,6 +2,7 @@ package com.avanade.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 import org.springframework.retry.annotation.EnableRetry;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.retry.annotation.EnableRetry;
  */
 @SpringBootApplication
 @EnableRetry
+
 public class ProducerApplication {
 
 	public static void main(String[] args) {
