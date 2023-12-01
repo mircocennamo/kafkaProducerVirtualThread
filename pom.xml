@@ -102,6 +102,37 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- ZIPKIN  monitora richieste http -->
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-zipkin</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-observation</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.zipkin.contrib.brave/brave-kafka-interceptor -->
+		<dependency>
+			<groupId>io.zipkin.contrib.brave</groupId>
+			<artifactId>brave-kafka-interceptor</artifactId>
+			<version>0.6.0</version>
+		</dependency>
+
+		<!--	<dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bridge-brave</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.reporter2</groupId>
+                <artifactId>zipkin-reporter-brave</artifactId>
+            </dependency>-->
+
     </dependencies>
 
 

@@ -10,3 +10,7 @@ then some of them will be put in a queue waiting for available threads.
 # SPRING actuator ( performace)
 
 http://localhost:8081/actuator
+
+
+
+# ZIPKIN monitora le richieste HTTP

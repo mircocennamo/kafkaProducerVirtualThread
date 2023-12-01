@@ -1,5 +1,6 @@
 package com.avanade.producer.config;
 
+import brave.kafka.interceptor.TracingProducerInterceptor;
 import com.avanade.model.Rilevazione;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -47,6 +48,15 @@ public class KakfaConfiguration {
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 1000);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
+
+        props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, TracingProducerInterceptor.class.getName());
+        props.put("zipkin.http.endpoint", "http://127.0.0.1:9411/api/v2/spans");
+        props.put("zipkin.sender.type", "HTTP");
+        props.put("zipkin.encoding", "JSON");
+        props.put("zipkin.remote.service.name", "kafka");
+        props.put("zipkin.local.service.name", "producer");
+        props.put("zipkin.trace.id.128bit.enabled", "true");
+        props.put("zipkin.sampler.rate", "1.0F");
         return props;
     }
 
@@ -88,5 +98,9 @@ public class KakfaConfiguration {
         });
         return kt;
     }
+
+
+
+
 }
 
