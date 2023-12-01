@@ -40,6 +40,7 @@
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 
@@ -104,10 +105,10 @@
 
 		<!-- ZIPKIN  monitora richieste http -->
 
-		<dependency>
+		<!--<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-otel</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>io.opentelemetry</groupId>
 			<artifactId>opentelemetry-exporter-zipkin</artifactId>
@@ -124,14 +125,14 @@
 			<version>0.6.0</version>
 		</dependency>
 
-		<!--	<dependency>
+			<dependency>
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-tracing-bridge-brave</artifactId>
             </dependency>
             <dependency>
                 <groupId>io.zipkin.reporter2</groupId>
                 <artifactId>zipkin-reporter-brave</artifactId>
-            </dependency>-->
+            </dependency>
 
     </dependencies>
 

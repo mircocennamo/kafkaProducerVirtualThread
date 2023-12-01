@@ -2,6 +2,7 @@ package com.avanade.producer.resource;
 
 import com.avanade.model.Rilevazione;
 import com.avanade.producer.SenderAsyncCallBack;
+import com.avanade.producer.SenderSyncCallBack;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,9 @@ public class RilevazioneResource {
     @Autowired
     private SenderAsyncCallBack senderAsyncCallBack;
 
+    @Autowired
+    private SenderSyncCallBack senderSyncCallBack;
+
 
     @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
     @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
@@ -50,6 +54,24 @@ public class RilevazioneResource {
             log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
         }
         senderAsyncCallBack.sendMessage(rilevazione, topic);
+        return new ResponseEntity<>(rilevazione, HttpStatus.OK);
+    }
+
+
+    @PostMapping(path = "/publish/nuovaRilevazione")
+    @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
+            backoff = @Backoff(delayExpression = "${retry.maxDelay}",multiplier = 2))
+    public ResponseEntity<Rilevazione> create(@RequestBody Rilevazione rilevazione){
+
+        UUID uuid = UUID.randomUUID();
+        rilevazione.setUuid(uuid);
+        rilevazione.setInstant(Instant.now());
+        log.info("Called RilevazioneResource create ::: body {} " + rilevazione.toString());
+        if(log.isDebugEnabled()){
+            log.debug(" method create has been called {}  ", Thread.currentThread());
+            log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
+        }
+        senderSyncCallBack.sendMessage(rilevazione, topic);
         return new ResponseEntity<>(rilevazione, HttpStatus.OK);
     }
 

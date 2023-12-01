@@ -9,7 +9,6 @@
 package com.avanade.producer;
 
 import com.avanade.model.Rilevazione;
-import io.micrometer.observation.annotation.Observed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -23,20 +22,19 @@ import java.util.concurrent.CompletableFuture;
  * @project spring-boot-kafka-producer
  */
 @Configuration
-public class SenderAsyncCallBack {
+public class SenderSyncCallBack {
 
 
     private KafkaTemplate<String, Rilevazione> kafkaTemplate;
 
 
     @Autowired
-    SenderAsyncCallBack(@Qualifier("templateKafkaAsyncCallBack") KafkaTemplate<String, Rilevazione> kafkaTemplate) {
+    SenderSyncCallBack(@Qualifier("templateKafka") KafkaTemplate<String, Rilevazione> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
 
     }
 
-    @Observed(name = "SenderAsyncCallBack",
-            contextualName = "sendMessageToKafkaTopic")
+
     public CompletableFuture<SendResult<String, Rilevazione>> sendMessage(Rilevazione rilevazione, String topicName) {
         return kafkaTemplate.send(topicName, rilevazione);
     }
