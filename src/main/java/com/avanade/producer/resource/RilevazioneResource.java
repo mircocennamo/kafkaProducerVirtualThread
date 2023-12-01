@@ -40,11 +40,15 @@ public class RilevazioneResource {
     @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
             backoff = @Backoff(delayExpression = "${retry.maxDelay}",multiplier = 2))
     public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione){
-        log.debug("RilevazioneResource method createCallBack has been called {} ::: attempts {} ", Thread.currentThread());
+
         UUID uuid = UUID.randomUUID();
-        log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
         rilevazione.setUuid(uuid);
         rilevazione.setInstant(Instant.now());
+        log.info("Called RilevazioneResource createCallBack ::: body {} " + rilevazione.toString());
+        if(log.isDebugEnabled()){
+            log.debug(" method createCallBack has been called {}  ", Thread.currentThread());
+            log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
+        }
         senderAsyncCallBack.sendMessage(rilevazione, topic);
         return new ResponseEntity<>(rilevazione, HttpStatus.OK);
     }
