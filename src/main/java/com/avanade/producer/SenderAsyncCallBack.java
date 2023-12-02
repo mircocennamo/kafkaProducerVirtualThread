@@ -8,8 +8,13 @@
 
 package com.avanade.producer;
 
+import brave.Span;
+import brave.Tracer;
+import com.avanade.TagConst;
 import com.avanade.model.Rilevazione;
 import io.micrometer.observation.annotation.Observed;
+import io.micrometer.tracing.annotation.NewSpan;
+import io.micrometer.tracing.annotation.SpanTag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +29,8 @@ import java.util.concurrent.CompletableFuture;
  */
 @Configuration
 public class SenderAsyncCallBack {
-
+    @Autowired
+    private Tracer tracer;
 
     private KafkaTemplate<String, Rilevazione> kafkaTemplate;
 
@@ -35,9 +41,11 @@ public class SenderAsyncCallBack {
 
     }
 
-    @Observed(name = "SenderAsyncCallBack",
-            contextualName = "sendMessageToKafkaTopic")
-    public CompletableFuture<SendResult<String, Rilevazione>> sendMessage(Rilevazione rilevazione, String topicName) {
+
+    @NewSpan("sendMessage")
+    public CompletableFuture<SendResult<String, Rilevazione>> sendMessage(@SpanTag("rilevazione.request")Rilevazione rilevazione, String topicName) {
+        Span span = this.tracer.currentSpan();
+        span.tag(TagConst.CORRELATION_ID, rilevazione.getUuid().toString());
         return kafkaTemplate.send(topicName, rilevazione);
     }
 }

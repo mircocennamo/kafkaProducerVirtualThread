@@ -1,8 +1,12 @@
 package com.avanade.producer.resource;
 
+import brave.Span;
+import brave.Tracer;
+import com.avanade.TagConst;
 import com.avanade.model.Rilevazione;
 import com.avanade.producer.SenderAsyncCallBack;
 import com.avanade.producer.SenderSyncCallBack;
+import io.micrometer.tracing.annotation.NewSpan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,15 +43,22 @@ public class RilevazioneResource {
     @Autowired
     private SenderSyncCallBack senderSyncCallBack;
 
+    @Autowired
+    private  Tracer tracer;
+
 
     @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
     @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
             backoff = @Backoff(delayExpression = "${retry.maxDelay}",multiplier = 2))
     public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione){
-
+        Span span = this.tracer.currentSpan();
         UUID uuid = UUID.randomUUID();
         rilevazione.setUuid(uuid);
         rilevazione.setInstant(Instant.now());
+        span.tag(TagConst.CORRELATION_ID, uuid.toString());
+        span.tag(TagConst.MESSAGGIO, rilevazione.toString());
+
+
         log.info("Called RilevazioneResource createCallBack ::: body {} " + rilevazione.toString());
         if(log.isDebugEnabled()){
             log.debug(" method createCallBack has been called {}  ", Thread.currentThread());
