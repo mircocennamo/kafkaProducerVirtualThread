@@ -1,4 +1,4 @@
-package com.avanade.model;
+package it.nsis.producer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

@@ -6,9 +6,9 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package com.avanade.producer;
+package it.nsis.producer;
 
-import com.avanade.model.Rilevazione;
+import it.nsis.producer.model.Rilevazione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;

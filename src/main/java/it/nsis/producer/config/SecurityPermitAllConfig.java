@@ -1,4 +1,4 @@
-package com.avanade.producer.config;
+package it.nsis.producer.config;
 /*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

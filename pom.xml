@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.avanade.producer.kafka</groupId>
-	<artifactId>kafka-producer</artifactId>
+	<groupId>it.nsis</groupId>
+	<artifactId>SCNTT-producer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -23,7 +23,7 @@
 		<lombok.version>1.18.30</lombok.version>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<start-class>com.avanade.producer.ProducerApplication</start-class>
+		<start-class>it.nsis.producer.ProducerApplication</start-class>
 		<spring-boot-admin-server.version>3.1.8</spring-boot-admin-server.version>
 	</properties>
 
@@ -134,6 +134,12 @@
                 <artifactId>zipkin-reporter-brave</artifactId>
             </dependency>
 
+		<dependency>
+			<groupId>it.nsis</groupId>
+			<artifactId>SCNTT-Common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
     </dependencies>
 
 
@@ -158,7 +164,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.avanade.producer.ProducerApplication</mainClass>
+					<mainClass>it.nsis.producer.ProducerApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>

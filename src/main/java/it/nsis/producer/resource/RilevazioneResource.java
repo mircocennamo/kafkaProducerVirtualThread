@@ -1,12 +1,11 @@
-package com.avanade.producer.resource;
+package it.nsis.producer.resource;
 
 import brave.Span;
 import brave.Tracer;
-import com.avanade.TagConst;
-import com.avanade.model.Rilevazione;
-import com.avanade.producer.SenderAsyncCallBack;
-import com.avanade.producer.SenderSyncCallBack;
-import io.micrometer.tracing.annotation.NewSpan;
+import it.nsis.producer.model.Rilevazione;
+import it.nsis.producer.SenderAsyncCallBack;
+import it.nsis.producer.SenderSyncCallBack;
+import it.nsis.utility.TagConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -56,13 +54,13 @@ public class RilevazioneResource {
         rilevazione.setUuid(uuid);
         rilevazione.setInstant(Instant.now());
         span.tag(TagConst.CORRELATION_ID, uuid.toString());
+        span.tag(TagConst.TARGA, rilevazione.getLicensePlate());
         span.tag(TagConst.MESSAGGIO, rilevazione.toString());
 
 
         log.info("Called RilevazioneResource createCallBack ::: body {} " + rilevazione.toString());
         if(log.isDebugEnabled()){
-            log.debug(" method createCallBack has been called {}  ", Thread.currentThread());
-            log.debug("UUID generated - {}  - UUID Version ", uuid, uuid.version());
+            log.debug("method createCallBack has been called {} :::  UUID generated  {}  ::: targa {} ",Thread.currentThread(), uuid,rilevazione.getLicensePlate());
         }
         senderAsyncCallBack.sendMessage(rilevazione, topic);
         return new ResponseEntity<>(rilevazione, HttpStatus.OK);

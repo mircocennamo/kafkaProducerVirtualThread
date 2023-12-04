@@ -1,7 +1,7 @@
-package com.avanade.producer.config;
+package it.nsis.producer.config;
 
 import brave.kafka.interceptor.TracingProducerInterceptor;
-import com.avanade.model.Rilevazione;
+import it.nsis.producer.model.Rilevazione;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;

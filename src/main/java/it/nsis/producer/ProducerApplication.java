@@ -1,4 +1,4 @@
-package com.avanade.producer;
+package it.nsis.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
