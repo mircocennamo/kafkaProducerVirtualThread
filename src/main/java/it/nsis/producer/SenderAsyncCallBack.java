@@ -10,7 +10,7 @@ package it.nsis.producer;
 
 import brave.Span;
 import brave.Tracer;
-import it.nsis.producer.model.Rilevazione;
+import it.nsis.model.Rilevazione;
 import io.micrometer.tracing.annotation.NewSpan;
 import io.micrometer.tracing.annotation.SpanTag;
 import it.nsis.utility.TagConst;

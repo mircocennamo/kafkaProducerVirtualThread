@@ -2,7 +2,7 @@ package it.nsis.producer.resource;
 
 import brave.Span;
 import brave.Tracer;
-import it.nsis.producer.model.Rilevazione;
+import it.nsis.model.Rilevazione;
 import it.nsis.producer.SenderAsyncCallBack;
 import it.nsis.producer.SenderSyncCallBack;
 import it.nsis.utility.TagConst;
@@ -52,7 +52,7 @@ public class RilevazioneResource {
         Span span = this.tracer.currentSpan();
         UUID uuid = UUID.randomUUID();
         rilevazione.setUuid(uuid);
-        rilevazione.setInstant(Instant.now());
+       // rilevazione.setInstant(Instant.now());
         span.tag(TagConst.CORRELATION_ID, uuid.toString());
         span.tag(TagConst.TARGA, rilevazione.getLicensePlate());
         span.tag(TagConst.MESSAGGIO, rilevazione.toString());
@@ -74,7 +74,7 @@ public class RilevazioneResource {
 
         UUID uuid = UUID.randomUUID();
         rilevazione.setUuid(uuid);
-        rilevazione.setInstant(Instant.now());
+       // rilevazione.setInstant(Instant.now());
         log.info("Called RilevazioneResource create ::: body {} " + rilevazione.toString());
         if(log.isDebugEnabled()){
             log.debug(" method create has been called {}  ", Thread.currentThread());

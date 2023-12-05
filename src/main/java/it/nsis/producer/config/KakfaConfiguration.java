@@ -1,7 +1,7 @@
 package it.nsis.producer.config;
 
 import brave.kafka.interceptor.TracingProducerInterceptor;
-import it.nsis.producer.model.Rilevazione;
+import it.nsis.model.Rilevazione;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -48,6 +48,7 @@ public class KakfaConfiguration {
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 1000);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
         props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
+       // props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
 
         props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, TracingProducerInterceptor.class.getName());
         props.put("zipkin.http.endpoint", "http://127.0.0.1:9411/api/v2/spans");
