@@ -14,3 +14,5 @@ http://localhost:8081/actuator
 
 
 # ZIPKIN monitora le richieste HTTP
+
+http://localhost:9411

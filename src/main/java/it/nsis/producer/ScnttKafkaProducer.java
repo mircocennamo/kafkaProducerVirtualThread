@@ -7,15 +7,15 @@ import org.springframework.retry.annotation.EnableRetry;
 
 /**
  * @author mirco.cennamo on 20/10/2023
- * @project spring-boot-kafka-producer
+ * @project scntt-kafka-producer
  */
 @SpringBootApplication
 @EnableRetry
 
-public class ProducerApplication {
+public class ScnttKafkaProducer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProducerApplication.class, args);
+		SpringApplication.run(ScnttKafkaProducer.class, args);
 	}
 
 

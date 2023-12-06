@@ -23,7 +23,7 @@
 		<lombok.version>1.18.30</lombok.version>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
-		<start-class>it.nsis.producer.ProducerApplication</start-class>
+		<start-class>it.nsis.producer.ScnttKafkaProducer</start-class>
 		<spring-boot-admin-server.version>3.1.8</spring-boot-admin-server.version>
 	</properties>
 
@@ -164,7 +164,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>it.nsis.producer.ProducerApplication</mainClass>
+					<mainClass>it.nsis.producer.ScnttKafkaProducer</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>

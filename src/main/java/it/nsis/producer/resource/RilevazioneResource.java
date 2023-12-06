@@ -28,7 +28,7 @@ import java.util.UUID;
  * @project spring-boot-kafka-producer
  */
 @RestController
-@RequestMapping("avanade")
+@RequestMapping("nsis")
 @Slf4j
 public class RilevazioneResource {
 
@@ -45,7 +45,7 @@ public class RilevazioneResource {
     private  Tracer tracer;
 
 
-    @PostMapping(path = "/publish/nuovaRilevazioneCallBack")
+    @PostMapping(path = "scntt/publish/new")
     @Retryable(retryFor = RuntimeException.class, maxAttemptsExpression = "${retry.maxAttempts}",
             backoff = @Backoff(delayExpression = "${retry.maxDelay}",multiplier = 2))
     public ResponseEntity<Rilevazione> createCallBack(@RequestBody Rilevazione rilevazione){
@@ -58,7 +58,7 @@ public class RilevazioneResource {
         span.tag(TagConst.MESSAGGIO, rilevazione.toString());
 
 
-        log.info("Called RilevazioneResource createCallBack ::: body {} " + rilevazione.toString());
+        log.info("Called RilevazioneResource createCallBack ::: body {} " + rilevazione);
         if(log.isDebugEnabled()){
             log.debug("method createCallBack has been called {} :::  UUID generated  {}  ::: targa {} ",Thread.currentThread(), uuid,rilevazione.getLicensePlate());
         }
