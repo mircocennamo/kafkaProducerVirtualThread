@@ -7,6 +7,9 @@
       environment:
         - storage_type=elasticsearch
         - "es_hosts=localhost:9200"
+        - "ES_INDEX=zipkin"
+        - "ES_EXPERIMENTAL_SPAN2=true"
+        - "ZIPKIN_LOG_LEVEL=DEBUG"
       ports:
         - 9411:9411
 

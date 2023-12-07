@@ -42,4 +42,4 @@ Thumbs.db
 atlassian-ide-plugin.xml
 target
 /logs/
-/zipkin/zipkin-server-3.0.0-rc0-exec.jar
+/old/zipkin/zipkin-server-3.0.0-rc0-exec.jar
