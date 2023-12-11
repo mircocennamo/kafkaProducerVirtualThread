@@ -56,3 +56,8 @@ $ docker-compose up -d
 
  #  Average duration per service over time
  # Creare una dashboard con le metriche create
+
+
+
+## Link to view Swagger-ui
+- http://localhost:10001/swagger-ui/index.html
