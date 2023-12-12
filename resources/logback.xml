@@ -34,7 +34,7 @@
 
 
 
-    <logger name="com.avanade" level="debug" additivity="false">
+    <logger name="it.nsis-producer" level="debug" additivity="false">
         <appender-ref ref="asyncRollingFile" />
       </logger>
 

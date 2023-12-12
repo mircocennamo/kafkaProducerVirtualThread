@@ -11,7 +11,6 @@ import org.springframework.retry.annotation.EnableRetry;
  */
 @SpringBootApplication
 @EnableRetry
-
 public class ScnttKafkaProducer {
 
 	public static void main(String[] args) {

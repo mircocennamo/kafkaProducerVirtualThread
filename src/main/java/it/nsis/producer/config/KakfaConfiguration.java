@@ -34,6 +34,27 @@ public class KakfaConfiguration {
     @Value("${bootstrap.servers}")
     private String bootstrapServers;
 
+    @Value("${ack.config}")
+    private String acks;
+
+    @Value("${retry.config}")
+    private Integer retries;
+
+    @Value("${batch.size.config}")
+    private Integer batchSize;
+
+    @Value("${linger.ms.config}")
+    private Integer lingerMs;
+
+    @Value("${buffer.memory.config}")
+    private Integer bufferMemory;
+
+
+    @Value("${zipkin.http.endpoint}")
+    private String zipkinHttpEndPoint;
+
+
+
 
 
     @Bean
@@ -42,16 +63,16 @@ public class KakfaConfiguration {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        props.put(ProducerConfig.ACKS_CONFIG, "all");
-        props.put(ProducerConfig.RETRIES_CONFIG, 0);
+        props.put(ProducerConfig.ACKS_CONFIG, acks);
+        props.put(ProducerConfig.RETRIES_CONFIG, retries);
         //TODO da definire il batch size
-        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 1000);
-        props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
-        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
-       // props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, batchSize);
+        props.put(ProducerConfig.LINGER_MS_CONFIG, lingerMs);
+        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, bufferMemory);
+
 
         props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, TracingProducerInterceptor.class.getName());
-        props.put("zipkin.http.endpoint", "http://127.0.0.1:9411/api/v2/spans");
+        props.put("zipkin.http.endpoint", zipkinHttpEndPoint);
         props.put("zipkin.sender.type", "HTTP");
         props.put("zipkin.encoding", "JSON");
         props.put("zipkin.remote.service.name", "scntt-kafka");
