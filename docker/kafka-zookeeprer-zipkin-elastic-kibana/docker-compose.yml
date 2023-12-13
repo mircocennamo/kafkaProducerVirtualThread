@@ -53,6 +53,8 @@ services:
     #mem_limit: 2G
     ports:
       - 9200:9200
+    depends_on:
+      - kafka
 
   # Accessible at http://localhost:5601
   kibana:
@@ -66,6 +68,8 @@ services:
     # mem_limit: 200m
     ports:
       - 5601:5601
+    depends_on:
+      - elasticsearch
 
  # logstash:
  #   image: docker.elastic.co/logstash/logstash:6.2.2
@@ -91,15 +95,33 @@ services:
       - STORAGE_TYPE=elasticsearch
       # Point the zipkin at the storage backend
       - "ES_HOSTS=http://elasticsearch:9200"
+      - "KAFKA_BOOTSTRAP_SERVERS=kafka:9092"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - 9411:9411
     depends_on:
       - elasticsearch
-# -------------------------------------------
-# infrastructure microservices
-# -------------------------------------------
 
-# -------------------------------------------
-# mock downstream microservices
-# -------------------------------------------
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
 
