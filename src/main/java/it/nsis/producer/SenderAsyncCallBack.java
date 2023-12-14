@@ -10,12 +10,11 @@ package it.nsis.producer;
 
 import brave.Span;
 import brave.Tracer;
-import it.nsis.model.Rilevazione;
 import io.micrometer.tracing.annotation.NewSpan;
 import io.micrometer.tracing.annotation.SpanTag;
+import it.nsis.model.Rilevazione;
 import it.nsis.utility.TagConst;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -35,7 +34,7 @@ public class SenderAsyncCallBack {
 
 
     @Autowired
-    SenderAsyncCallBack(@Qualifier("templateKafkaAsyncCallBack") KafkaTemplate<String, Rilevazione> kafkaTemplate) {
+    SenderAsyncCallBack(KafkaTemplate<String, Rilevazione> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
 
     }

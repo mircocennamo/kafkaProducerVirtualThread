@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.nsis.model.Rilevazione;
 import it.nsis.producer.SenderAsyncCallBack;
-import it.nsis.producer.SenderSyncCallBack;
 import it.nsis.utility.TagConst;
 import it.nsis.viewmodel.RilevazioneRequestVm;
 import it.nsis.viewmodel.RilevazioneResponseVm;
@@ -45,8 +44,7 @@ public class RilevazioneResource {
     @Autowired
     private SenderAsyncCallBack senderAsyncCallBack;
 
-    @Autowired
-    private SenderSyncCallBack senderSyncCallBack;
+
 
     @Autowired
     private  Tracer tracer;
@@ -76,9 +74,11 @@ public class RilevazioneResource {
 
 
         log.info("Called RilevazioneResource createCallBack ::: body {} " + rilevazione);
+        log.debug("Thread for createCallBack {} " , Thread.currentThread());
         if(log.isDebugEnabled()){
             log.debug("method createCallBack has been called {} :::  UUID generated  {}  ::: targa {} ",Thread.currentThread(), uuid,rilevazione.getLicensePlate());
         }
+
         senderAsyncCallBack.sendMessage(rilevazione, topic);
         return new ResponseEntity<>(RilevazioneResponseVm.fromModel(rilevazione), HttpStatus.OK);
     }
@@ -89,9 +89,10 @@ public class RilevazioneResource {
 
 
     @Recover
-    public  ResponseEntity<Rilevazione> publishFallback(Exception e,Rilevazione rilevazione){
-        log.error("error send to kafka  bean {}  ::: error {} " , rilevazione, e.getMessage());
-        return new ResponseEntity<>(rilevazione, HttpStatus.INTERNAL_SERVER_ERROR);
+    public  ResponseEntity<RilevazioneRequestVm> publishFallback(Exception e,RilevazioneRequestVm rilevazioneRequestVm){
+        log.debug("Thread for publishFallback {} " , Thread.currentThread());
+        log.error("error send to kafka  bean {}  ::: error {} " , rilevazioneRequestVm, e.getMessage());
+        return new ResponseEntity<>(rilevazioneRequestVm, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

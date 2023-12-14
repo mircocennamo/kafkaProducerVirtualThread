@@ -57,14 +57,20 @@ public class KakfaConfiguration {
 
 
 
+
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        props.put(ProducerConfig.ACKS_CONFIG, acks);
-        props.put(ProducerConfig.RETRIES_CONFIG, retries);
+        props.put(ProducerConfig.ACKS_CONFIG, acks); //all
+        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        props.put(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
+        props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, "5");
+        props.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, "120000");
+
+
         //TODO da definire il batch size
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, batchSize);
         props.put(ProducerConfig.LINGER_MS_CONFIG, lingerMs);
@@ -89,12 +95,9 @@ public class KakfaConfiguration {
     }
 
 
-    @Bean(name="templateKafka")
-    public KafkaTemplate<String, Rilevazione> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
 
-    @Bean(name="templateKafkaAsyncCallBack")
+
+    @Bean(name="templateKafka")
     public KafkaTemplate<String, Rilevazione> kafkaTemplateAsyncCallBack() {
             KafkaTemplate kt = new KafkaTemplate<>(producerFactory());
             kt.setProducerListener(new ProducerListener() {
