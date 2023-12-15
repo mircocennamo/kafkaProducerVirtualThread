@@ -1,0 +1,7 @@
+
+## nota la chiave è settata come
+## variabile di ambiente
+## set JASYPT_ENCRYPTOR_PASSWORD=SCNTT on windows
+## export JASYPT_ENCRYPTOR_PASSWORD=SCNTT on unix
+
+mvn jasypt:encrypt -Djasypt.plugin.path="file:src/main/resources/application.properties"

@@ -151,6 +151,13 @@
 			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 
+		<!-- libreria per crypt/decrypt properties -->
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>3.0.5</version>
+		</dependency>
+
     </dependencies>
 
 
@@ -185,6 +192,12 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- plugin per crypt/decrypt properties -->
+			<plugin>
+				<groupId>com.github.ulisesbocchio</groupId>
+				<artifactId>jasypt-maven-plugin</artifactId>
+				<version>3.0.5</version>
 			</plugin>
 		</plugins>
 	</build>
