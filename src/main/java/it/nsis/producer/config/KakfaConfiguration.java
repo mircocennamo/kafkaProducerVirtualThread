@@ -37,8 +37,7 @@ public class KakfaConfiguration {
     @Value("${ack.config}")
     private String acks;
 
-    @Value("${retry.config}")
-    private Integer retries;
+
 
     @Value("${batch.size.config}")
     private Integer batchSize;

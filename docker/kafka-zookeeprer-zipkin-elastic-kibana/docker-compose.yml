@@ -96,7 +96,8 @@ services:
       # Point the zipkin at the storage backend
       - "ES_HOSTS=http://elasticsearch:9200"
       - "KAFKA_BOOTSTRAP_SERVERS=kafka:9092"
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g -XX:+ExitOnOutOfMemoryError"
+      - "ZIPKIN_LOG_LEVEL=DEBUG"
     ports:
       - 9411:9411
     depends_on:
@@ -124,4 +125,20 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      KAFKA_ZOOKEEPER_SESSION_TIMEOUT: "6000"
+      KAFKA_RESTART_ATTEMPTS: "10"
+      KAFKA_RESTART_DELAY: "5"
+      ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: "0" 
+  
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:9092"
+    depends_on:
+      - "kafka"
+  
 
